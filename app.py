@@ -1,17 +1,15 @@
-from matplotlib import font_manager
+if korean_font is None:
+    st.error("한글 폰트를 찾지 못했습니다.")
+else:
+    wc = WordCloud(
+        font_path=korean_font,
+        width=1200,
+        height=600,
+        background_color="white"
+    ).generate(" ".join(words))
 
-fonts = [f.fname for f in font_manager.fontManager.ttflist]
+    fig, ax = plt.subplots(figsize=(12, 6))
+    ax.imshow(wc)
+    ax.axis("off")
 
-korean_font = None
-
-for f in fonts:
-    if (
-        "Nanum" in f
-        or "Malgun" in f
-        or "NotoSansCJK" in f
-        or "Noto Sans CJK" in f
-    ):
-        korean_font = f
-        break
-
-st.write("찾은 폰트:", korean_font)
+    st.pyplot(fig)
